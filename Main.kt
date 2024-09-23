@@ -6,5 +6,6 @@ fun main() {
     students.add(Student("Лыкова", "Каролина", "Дмитриевна", Email = "karolina@gmail.com"));
     students.add(Student("Малышев", "Дмитрий", "Араратович", Telegram = "@dmmvrs", Phone = "+79298491219"));
     students.add(Student("Иванов", "Иван", "Иваныч"));
+    students.add(Student(hashMapOf(Pair("name","Настя"),Pair("surname","Милен"),Pair("patronymic","Романовна"))));
     students.forEach { it: Student -> println(it) };
 }
