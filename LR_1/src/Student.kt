@@ -17,7 +17,12 @@ data class Student(
         require(Student.isValidEmail(this.Email)) { "Email must be a valid email" }
         require(Student.isValidGitHub(this.gitHub)) { "GitHub must be a valid GitHub username" }
     }
-
+    //Проверка наличия гита
+    fun gitExist() = this.gitHub!=null
+    //Проверка наличия второго контакта
+    fun contactExist() = this.Email!=null || this.Telegram!=null || this.Phone!=null;
+    //Проверка наличия гита и 1 из контактов
+    fun validate() = this.gitExist() && this.contactExist();
     companion object {
         var classId: Int = 0
         fun autoGenerateId(): Int {

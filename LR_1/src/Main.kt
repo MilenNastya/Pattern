@@ -16,5 +16,7 @@ fun main() {
     students.forEach { student ->
         println(student)
     }
+    println(Student(hashMapOf(Pair("name","N"),Pair("surname","Milenchenko"),Pair("patronymic","Romanovna"))).validate())
+    println(Student("Malishev", "Denis", "Araratovich", Telegram = "@dmmvrs", Phone = "+79298491211").validate());
 }
 
