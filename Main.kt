@@ -18,4 +18,5 @@ fun main() {
     stud.name = "Abbbbcddd";
     stud.phoneNumber="+79885556671"
     println(stud)
+    println(stud.getInfo())
 }
