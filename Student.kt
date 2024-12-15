@@ -174,9 +174,10 @@ class Student(
         return "Student(id:${this.id},surname:${this.surname},name:${this.name},patronymic:${this.patronymic},phoneNumber:${this.phoneNumber},email:${this.email},telegram:${this.telegram},gitHub:${this.gitHub}"
     }
 
-    constructor(input: String) : this(
-        input.split(" ")
-            [0], input.split(" ")[1], input.split(" ")[2]
-    ) {
-    }
+    constructor(input:String): this (input.split(" ")
+        [0],input.split(" ")[1],input.split(" ")
+        [2],input.split(" ").getOrNull(3),
+        input.split(" ").getOrNull(4),
+        input.split(" ").getOrNull(5),
+        input.split(" ").getOrNull(6))
 }
