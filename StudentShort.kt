@@ -60,6 +60,7 @@ class StudentShort: StudentBase {
             if(value==null) throw Exception("Неверно введены инициалы и фамилия")
             return value;
         }
+        fun returnPropertyNames() = StudentShort(-1,"Initials:A A. A., gitHub:, Contact:").propertiesReturn().keys
     }
 
 
