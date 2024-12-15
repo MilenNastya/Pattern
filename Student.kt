@@ -1,110 +1,182 @@
-data class Student(
-   private  var surname: String,
-    private var name: String,
-    private var patronymic: String,
-    private var id: Int = autoGenerateId(),
-    private var Phone: String? = null,
-    private var Telegram: String? = null,
-     private var Email: String? = null,
-     private var gitHub: String? = null
-) {
+import kotlin.reflect.KFunction1
+
+class Student(
+    surnameValue: String,
+    nameValue: String,
+    patronymicValue: String,
+    phoneNumberValue: String?=null,
+    telegramValue: String?=null,
+    emailValue: String?=null,
+    gitHubValue: String?=null) {
+    var surname: String = surnameValue
+        set(value: String) {
+            validatorSurname(value)
+            field = value;
+        };
+    var name: String = nameValue
+        set(value: String) {
+            validatorName(value)
+            field = value;
+        };
+    var patronymic: String = patronymicValue
+        set(value: String) {
+            validatorPatronymic(value)
+            field = value;
+        };
+    var id: Int = autoGenerateId();
+    var phoneNumber: String? = phoneNumberValue
+        set(value: String?) {
+            if (this.checkValueAndPropertyNotNull(value, field)) {
+                validatorPhoneNumber(value)
+                field = value;
+            }
+        };
+    var telegram: String? = telegramValue
+        set(value: String?) {
+            if (this.checkValueAndPropertyNotNull(value, field)) {
+                validatorTelegram(value)
+                field = value;
+            }
+        };
+    var email: String? = emailValue
+        set(value: String?) {
+            if (this.checkValueAndPropertyNotNull(value, field)) {
+                validatorEmail(email)
+                field = value;
+            }
+        };
+    var gitHub: String? = gitHubValue
+        set(value: String?) {
+            if (this.checkValueAndPropertyNotNull(value, field)) {
+                validatorGit(value)
+                field = value;
+            }
+        };
+
     init {
-        require(isValidSurname(this.surname),) { "Surname must be a valid surname" }
-        require(isValidName(this.name)) { "Name must be a valid name" }
-        require(isValidPatronymic(this.patronymic)) { "Patronymic must be a valid patronymic" }
-        require(isValidPhone(this.Phone)) { "Phone must be a valid phone number" }
-        require(isValidTelegram(this.Telegram)) { "Telegram must be a valid telegram" }
-        require(isValidEmail(this.Email)) { "Email must be a valid email" }
-        require(isValidGitHub(this.gitHub)) { "GitHub must be a valid GitHub username" }
-    }
-    //Проверка наличия гита
-    private fun gitExist() = this.gitHub!=null
-    //Проверка наличия второго контакта
-    private fun contactExist() = this.Email!=null || this.Telegram!=null || this.Phone!=null;
-    //Проверка наличия гита и 1 из контактов
-    fun validate() = this.gitExist() && this.contactExist();
-    //Метод set_contacts
-    private fun checkValueAndPropertyNotNull(value:String?,propertyValue:String?) = value==null && propertyValue!=null || value!=null
-    private fun contactSetter(value: String?,propertyValue: String?,setter:(value: String?)->(Unit)){
-        if(this.checkValueAndPropertyNotNull(value,propertyValue)){
-            setter(value)
-        }
-    }
-    // Сеттер телефона
-    private fun phoneSetter(value: String?) {
-        require(isValidPhone(value))
-        this.Phone = value
-    }
-    private fun setPhoneNumber(value:String?) = this.contactSetter(value, this.Phone) { this.phoneSetter(it) }
-    // Сеттер телеграмма
-    private fun telegramSetter(value: String?) {
-        require(isValidTelegram(value))
-        this.Telegram = value
-    }
-    private fun setTelegram(value:String?) = this.contactSetter(value,this.Telegram,this::telegramSetter)
-    //Сеттер почты
-    private fun emailSetter(value: String?) {
-        require(isValidEmail(value))
-        this.Email = value
-    }
-    private fun setEmail(value:String?) = this.contactSetter(value,this.Email,this::emailSetter)
-    //Сеттер гита
-    private fun gitSetter(value: String?) {
-        require(isValidGitHub(value))
-        this.gitHub = value
-    }
-    private fun setGit(value:String?) = this.contactSetter(value,this.gitHub,this::gitSetter);
-    // Сеттер контактов
-    fun setContacts(contacts:HashMap<String,String?>){
-        this.setPhoneNumber(contacts.getOrDefault("phoneNumber",this.Phone))
-        this.setGit(contacts.getOrDefault("gitHub",this.gitHub))
-        this.setEmail(contacts.getOrDefault("email",this.Email))
-        this.setTelegram(contacts.getOrDefault("telegram",this.Telegram))
+        validatorSurname(this.surname)
+        validatorName(this.name)
+        validatorPatronymic(this.patronymic)
+        validatorPhoneNumber(this.phoneNumber)
+        validatorTelegram(this.telegram)
+        validatorEmail(this.email)
+        validatorGit(this.gitHub);
     }
 
+    // Функция для валидации полей
+    private fun <T> validatorFunc(value: T, errorMessage: String, valudatorFunction: KFunction1<T, Boolean>) {
+        require(valudatorFunction(value)) { errorMessage }
+    }
+
+    // Валидатор гита
+    private fun validatorGit(gitHub: String?) = validatorFunc(gitHub, "Git must be a valid git", ::isValidGitHub)
+
+    // Валидатор почты
+    private fun validatorEmail(email: String?) = validatorFunc(email, "Email must be a valid email", ::isValidEmail)
+
+    // Валидатор телефона
+    private fun validatorPhoneNumber(phone: String?) =
+        validatorFunc(phone, "Phone must be a valid phone number", ::isValidPhone)
+
+    // Валидатор телеги
+    private fun validatorTelegram(telegram: String?) =
+        validatorFunc(telegram, "Telegram must be a valid telegram", ::isValidTelegram)
+
+    // Валидатор фамилии
+    private fun validatorSurname(surname: String) =
+        validatorFunc(surname, "Surname must be a valid surname", ::isValidSurname)
+
+    // Валидатор имени
+    private fun validatorName(name: String) = validatorFunc(name, "Name must be a valid name", ::isValidName)
+
+    // Валидатор отчества
+    private fun validatorPatronymic(patronymic: String) =
+        validatorFunc(patronymic, "Patronymic must be a valid patronymic", ::isValidPatronymic)
+
+    //Проверка наличия гита
+    private fun gitExist() = this.gitHub != null
+
+    //Проверка наличия второго контакта
+    private fun contactExist() = this.email != null || this.telegram != null || this.phoneNumber != null
+
+    //Проверка наличия гита и 1 из контактов
+    fun validate() = this.gitExist() && this.contactExist()
+
+
+    //Метод set_contacts
+    fun setContacts(contacts: HashMap<String, String?>) {
+        this.phoneNumber = contacts.getOrDefault("phoneNumber", this.phoneNumber);
+        this.gitHub = contacts.getOrDefault("gitHub", this.gitHub);
+        this.email = contacts.getOrDefault("email", this.email)
+        this.telegram = contacts.getOrDefault("telegram", this.telegram);
+    }
+
+    private fun checkValueAndPropertyNotNull(value: String?, propertyValue: String?) =
+        value == null && propertyValue != null || value != null
+
     companion object {
-        var classId: Int = 0
-        fun autoGenerateId(): Int {
+        // Автосоздание id
+        private var classId: Int = 0
+        private fun autoGenerateId(): Int {
             classId += 1
             return classId
         }
 
-        fun isValidPhone(phone: String?): Boolean {
+        // Валидация телефона
+        private fun isValidPhone(phone: String?): Boolean {
             return phone?.matches(Regex("\\+7\\d{10}")) ?: true
         }
 
-        fun isValidSurname(surname: String): Boolean {
+        //Валидация фамилии
+        private fun isValidSurname(surname: String): Boolean {
             return surname.matches(Regex("^[A-Z][a-z]*(-([A-Za-z]?)[a-z]*)*$"))
         }
 
-        fun isValidName(name: String): Boolean {
+        //Валидация имени
+        private fun isValidName(name: String): Boolean {
             return name.matches(Regex("^[A-Z][a-z]*(-([A-Za-z]?)[a-z]*)*$"))
         }
 
-        fun isValidPatronymic(patronymic: String): Boolean {
+        //Валидация отчества
+        private fun isValidPatronymic(patronymic: String): Boolean {
             return patronymic.matches(Regex("^[A-Z][a-z]*(-([A-Za-z]?)[a-z]*)*$"))
         }
 
-        fun isValidTelegram(telegram: String?): Boolean {
+        //Валидация телеграм
+        private fun isValidTelegram(telegram: String?): Boolean {
             return telegram?.matches(Regex("@(?=.{5,64})(?!_)(?!.*__)[a-zA-Z0-9_]+(?<![_.])")) ?: true
         }
 
-        fun isValidEmail(email: String?): Boolean {
+        //Валидация почты
+        private fun isValidEmail(email: String?): Boolean {
             return email?.matches(Regex("^[a-zA-Z][a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z]{2,}$")) ?: true
         }
 
-        fun isValidGitHub(gitHub: String?): Boolean {
+        //Валидация гита
+        private fun isValidGitHub(gitHub: String?): Boolean {
             return gitHub?.let { !Regex("[$%#@&/?]").matches(it) } ?: true
         }
+
     }
 
-    constructor(studentArgs: HashMap<String,Any?>) : this(
-        surname = studentArgs["surname"].toString(),
-        name = studentArgs["name"].toString(),
-        patronymic = studentArgs["patronymic"].toString(),
-        Phone = studentArgs.getOrDefault("Phone", null) as String?,
-        Telegram = studentArgs.getOrDefault("Telegram", null) as String?,
-        Email = studentArgs.getOrDefault("Email", null) as String?,
-        gitHub = studentArgs.getOrDefault("gitHub", null) as String?
+    // Конструктор через hasmpam класса
+    constructor(studentArgs: HashMap<String, Any?>) : this(
+        surnameValue = studentArgs["surname"].toString(),
+        nameValue = studentArgs["name"].toString(),
+        patronymicValue = studentArgs["patronymic"].toString(),
+        phoneNumberValue = studentArgs.getOrDefault("phoneNumber", null) as String?,
+        telegramValue = studentArgs.getOrDefault("telegram", null) as String?,
+        emailValue = studentArgs.getOrDefault("email", null) as String?,
+        gitHubValue = studentArgs.getOrDefault("gitHub", null) as String?
     )
+
+    override fun toString(): String {
+        return "Student(id:${this.id},surname:${this.surname},name:${this.name},patronymic:${this.patronymic},phoneNumber:${this.phoneNumber},email:${this.email},telegram:${this.telegram},gitHub:${this.gitHub}"
+    }
+
+    constructor(input: String) : this(
+        input.split(" ")
+            [0], input.split(" ")[1], input.split(" ")[2]
+    ) {
+    }
 }

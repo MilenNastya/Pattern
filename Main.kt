@@ -1,26 +1,21 @@
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val students = mutableListOf<Student>()
+    val students = mutableListOf<Student>();
+    students.add(Student("Aaaaa","Bbbbbb","Cccccc"));
+    students.add(Student("Aabbb-Abbb","Bbbbbb","Cccccc", telegramValue = "@elelelelele"));
+    students.add(Student("Aaabbb","Bbb-Cbbb","Cccccc", gitHubValue = "eeefefefef"));
+    students.add(Student("A-B","Bbbbbb","Cccccc", emailValue = "kk@gmial.com"));
+    students.add(Student("B","Vbbbbb","Cccccc", phoneNumberValue = "+79889889898"));
+    students.add(Student(hashMapOf(Pair("name","E"),Pair("surname","Bbbbbb"),Pair("patronymic","Cccccc"))));
+    students.forEach { it: Student -> println(it) };
 
-    // Примеры создания студентов на основе предоставленных данных
-    students.add(Student("Milen", "Nastya", "Romanovna"))
-    students.add(Student("Krivosheev", "Ilia", "Vladivirovich", Telegram = "@IlyaVladimirovich00"))
-    students.add(Student("Milen", "Nastya", "Romanovna", Phone = "+79181130942"))
-    students.add(Student("Likova", "Karoline", "Dmitrievna", Email = "karolina@gmail.com"))
-    students.add(Student("Malishev", "Denis", "Araratovich", Telegram = "@dmmvrs", Phone = "+79298491211"))
-    students.add(Student(hashMapOf(
-        "surname" to "Milenchenko",
-        "name" to "N",
-        "patronymic" to "Romanovna"
-    )))
+    println(Student(hashMapOf(Pair("name","E"),Pair("surname","Bbbbbb"),Pair("patronymic","Cccccc"))).validate())
 
-    students.forEach { student ->
-        println(student)
-    }
-
-    println(Student(hashMapOf("name" to "N", "surname" to "Milenchenko", "patronymic" to "Romanovna")).validate())
-    println(Student("Malishev", "Denis", "Araratovich", Telegram = "@dmmvrs", Phone = "+79298491211").validate())
-
-    val stud = Student("Malishev", "Denis", "Araratovich", Telegram = "@dmmvrs", Phone = "+79298491211")
-    stud.setContacts(hashMapOf("Telegram" to "@dmmvrs", "gitHub" to null))
+    val stud = Student("A-B","Bbbbbb","Cccccc", emailValue = "kk@gmial.com", gitHubValue = "eeefefefef", phoneNumberValue = "+79885556677");
+    stud.setContacts(hashMapOf(Pair("email","kkkkk@gmial.com"),Pair("telegram","@elelelel"),Pair("gitHub",null)));
+    println(stud)
+    stud.name = "Abbbbcddd";
+    stud.phoneNumber="+79885556671"
     println(stud)
 }
