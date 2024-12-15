@@ -1,6 +1,7 @@
 
 
 import Student
+import DataTable
 
 fun main() {
     val students = mutableListOf<Student>();
@@ -12,4 +13,8 @@ fun main() {
     students.add(Student(hashMapOf(Pair("name","E"),Pair("surname","Bbbbbb"),Pair("patronymic","Cccccc"))));
     students.forEach { it: Student -> println(it) };
     Student.writeToTxt("src/","out.txt",Student.readFromTxt("src/text.txt"))
+    var dat = DataTable(arrayOf(arrayOf(Student("Aaaaa","Bbbbbb","Cccccc"),3),arrayOf(4,3)))
+    var ar = dat.getElement(0,0) as Student
+    ar.telegram = "@aaaaaa"
+    println(dat.getElement(0,0))
 }
