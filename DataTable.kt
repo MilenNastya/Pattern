@@ -1,4 +1,4 @@
-
+package DataListPack
 class DataTable(private val data: Array<Array<Any?>>) {
     fun getElement(row: Int, col: Int):Any? {
         return if (row in data.indices && col in data[row].indices) {
@@ -15,6 +15,7 @@ class DataTable(private val data: Array<Array<Any?>>) {
     fun getRowCount(): Int {
         return data.size
     }
+
     override fun toString(): String {
         var resultString = ""
         for(i in 0..<this.data.size){
@@ -26,7 +27,6 @@ class DataTable(private val data: Array<Array<Any?>>) {
         return resultString
     }
 }
-
 // Функция для создания копии элемента, если это возможно
 fun <T> T.copyIfPossible(): T {
     return when (this) {

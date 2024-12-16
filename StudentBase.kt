@@ -1,3 +1,5 @@
+package Student
+
 import kotlin.math.max
 
 abstract class StudentBase(open val id:Int = autoGenerateId(), open val gitHub: String?=null) {
@@ -13,7 +15,7 @@ abstract class StudentBase(open val id:Int = autoGenerateId(), open val gitHub: 
         private var classId:Int = 0
         private var maxId:Int = 0;
         internal fun autoGenerateId():Int{
-            classId= maxId
+            classId = maxId
             maxId = maxId + 1;
             return classId
         }
@@ -23,7 +25,7 @@ abstract class StudentBase(open val id:Int = autoGenerateId(), open val gitHub: 
         internal fun formatPropertyOutput(propertyName:String,propertyValue: Any?) = if(propertyValue==null) "${propertyName}:" else "${propertyName}:${propertyValue}"
 
 
-        fun parseString(data:String):HashMap<String,Any?>{
+        internal fun parseString(data:String):HashMap<String,Any?>{
             val dataSplit = data.split(',')
             val hashData = HashMap<String,Any?>();
             for (propertyValue in dataSplit){
@@ -37,7 +39,6 @@ abstract class StudentBase(open val id:Int = autoGenerateId(), open val gitHub: 
             }
             return hashData
         }
-
     }
 
     override fun toString(): String {

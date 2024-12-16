@@ -1,5 +1,4 @@
-import java.io.File
-import java.io.FileWriter
+package Student
 
 class Student(
     surnameValue: String,
@@ -11,7 +10,6 @@ class Student(
     emailValue: String?=null,
     gitHubValue: String?=null): StudentBase(idValue,gitHubValue)
 {
-
 
     var surname:String=surnameValue
         set(value:String) {
@@ -99,28 +97,7 @@ class Student(
             return StudentBase.parseString(dataWithoutPrefix)
         }
 
-        // Чтение из файла
-        fun readFromTxt(filePath: String):Array<Student> {
-            val file = File(filePath)
-            if(!file.exists()){
-                throw Exception("Ты откуда взял этот файл")
-            }
-            else{
-                val lines = file.readLines().map { Student(it) }
-                return lines.toTypedArray()
-            }
-        }
-
-        // Запись в файл
-        fun writeToTxt(filePath: String,fileName:String,students:Array<Student>) {
-            val file = File(filePath+"/${fileName}")
-            if(!file.exists()){
-                file.createNewFile()
-            }
-            val fileWriter = FileWriter(filePath+"/${fileName}")
-            students.forEach { fileWriter.appendLine(it.toString()) }
-            fileWriter.close()
-        }
+        fun returnPropertyNames() = Student("Student(id:1,surname:Aabbb-Abbb,name:Bbbbbb,patronymic:Cccccc,phoneNumber:,email:,telegram:@elelelelele,gitHub:)").propertiesReturn().keys
     }
 
     // Конструктор через hasmpam класса
@@ -163,7 +140,7 @@ class Student(
         }
     private fun getFormattedContactShort():String{
         val contact = getOneContact()
-        return if(contact?.keys!=null)formatPropertyOutput(contact.keys.first() as String,contact.values.first()) else ""
+        return if(contact?.keys!=null) formatPropertyOutput(contact.keys.first() as String,contact.values.first()) else ""
     }
     fun getInfo():String{
         return "Initials:${this.getInitials()}, ${formatPropertyOutput("gitHub",this.gitHub)}, Contact:${getFormattedContactShort()}"
