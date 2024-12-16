@@ -4,7 +4,7 @@ class Student(
     surnameValue: String,
     nameValue: String,
     patronymicValue: String,
-    idValue:Int = autoGenerateId(),
+    idValue: Int = autoGenerateId(),
     phoneNumberValue: String?=null,
     telegramValue: String?=null,
     emailValue: String?=null,
@@ -102,10 +102,10 @@ class Student(
 
     // Конструктор через hasmpam класса
     constructor(studentArgs: HashMap<String,Any?>) : this(
-        surnameValue    = studentArgs["surname"].toString(),
-        nameValue       = studentArgs["name"].toString(),
+        surnameValue = studentArgs["surname"].toString(),
+        nameValue = studentArgs["name"].toString(),
         patronymicValue = studentArgs["patronymic"].toString(),
-        idValue         = if(studentArgs.getOrDefault("id",null).toString().toIntOrNull()==null) autoGenerateId() else (studentArgs["id"].toString().toInt()),
+        idValue = if(studentArgs.getOrDefault("id",null).toString().toIntOrNull()==null) autoGenerateId() else (studentArgs["id"].toString().toInt()),
         phoneNumberValue = studentArgs.getOrDefault("phoneNumber",null) as String?,
         telegramValue = studentArgs.getOrDefault("telegram",null) as String?,
         emailValue = studentArgs.getOrDefault("email",null) as String?,
