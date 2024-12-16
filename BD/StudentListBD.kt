@@ -1,10 +1,14 @@
 package main.kotlin
+
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.ResultSet
 import java.sql.Statement
-class StudentsListDB constructor(){
+
+class StudentsListDB constructor() {
+
     private lateinit var connection: Connection
+
     init {
         try {
             connection = DriverManager.getConnection(
@@ -16,6 +20,7 @@ class StudentsListDB constructor(){
             e.printStackTrace()
         }
     }
+
     fun executeQuery(query: String): ResultSet? {
         return try {
             val stmt = connection.createStatement()
@@ -25,23 +30,26 @@ class StudentsListDB constructor(){
             null
         }
     }
-}
-fun main() {
-    val dbConnection = StudentsListDB()
-    val result = dbConnection.executeQuery("SELECT * FROM student")
-    if (result != null) {
-        val metaData = result.metaData
-        // Выводим заголовков столбцов
-        for (i in 1..metaData.columnCount) {
-            print("${metaData.getColumnName(i)}\t")
-        }
-        println()
-        // Вывод каждой строки
-        while (result.next()) {
-            for (i in 1..metaData.columnCount) {
-                print("${result.getString(i)}\t")
+
+    fun getByID(id: Int) {
+        val result = executeQuery("SELECT * FROM student WHERE id = ${id}")
+        if (result != null) {
+            // Вывод каждой строки
+            while (result.next()) {
+                for (i in 1..result.metaData.columnCount) {
+                    print("${result.getString(i)}\t")
+                }
+                println()
             }
-            println()
         }
     }
+}
+
+fun main() {
+    val dbConnection = StudentsListDB()
+//    dbConnection.getByID(1);
+//    dbConnection.getByID(2);
+//    dbConnection.getByID(3);
+//    dbConnection.getByID(4);
+    dbConnection.getByID(5);
 }
