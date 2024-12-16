@@ -1,14 +1,9 @@
-package org.example
-
 import Student.Student
-import StudentList.StudentListJson
-import StudentList.StudentListTxt
-import StudentList.StudentListYaml
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import StudentList.*
 fun main() {
-    val studListTxt = StudentListTxt()
+
+
+    val studListTxt = StudentListBase(StudentListTxtStrategy())
     studListTxt.readFromFile("src/main/resources/text.txt")
     studListTxt.writeToFile("src/main/resources/","out.txt")
     println(studListTxt.sortByInitials())
@@ -21,11 +16,11 @@ fun main() {
     )
     println(studListTxt)
 
-    val studentListJson = StudentListJson()
+    val studentListJson = StudentListBase(StudentListJsonStrategy())
     studentListJson.readFromFile("src/main/resources/file.json")
     studentListJson.writeToFile("src/main/resources/","res.json")
 
-    val studentListYaml = StudentListYaml()
+    val studentListYaml = StudentListBase(StudentListYamlStrategy())
     studentListYaml.readFromFile("src/main/resources/test.yaml")
     studentListYaml.writeToFile("src/main/resources/","res.yaml")
 }
