@@ -1,0 +1,7 @@
+INSERT INTO student (surname, name, patronymic, phone, telegram, mail, git)  
+VALUES 
+('Миленченко', 'Анастасия', 'Романовна', '+79181130942', '@milen', 'nastyamilen4chenko@gmail.com', 'https://github.com/Milen'),
+('Кривошеев', 'Илья', 'Владимирович', '+79679304550', '@krivosheev', 'krivosheev@mail.ru', 'https://github.com/ILUSHA'),
+('Лыкова', 'Каролина', 'Дмитриевна', '+79111111111', '@likova_k', 'likova.karolina@gmail.com', 'https://github.com/LikovaAAA'),
+('Пупкин', 'Александр', 'Пупкович', '+79811111010', '@pupkiin', 'aleksandr.pupkin@mail.ru', 'https://github.com/Pypkin');
+('Шмаков', 'Дмитрий', 'Пупкович', '+791234567890', '@shmakov', 'smakov@mail.ru', 'https://github.com/shmakov');
